@@ -1,4 +1,7 @@
+noseX=0;
+noseY=0;
 function preload(){
+    mustache=loadImage('https://i.postimg.cc/brYkvXLz/mustache.jpg');
 }
 function setup(){
     canvas = createCanvas(500, 400);
@@ -13,18 +16,19 @@ function setup(){
 function modelLoaded(){
     console.log('PoseNet is Initialized');
 }
-function gotPoses(results)
+function gotPoses(results){
+if(results.length > 0)
 {
- if(results.length > 0)
- {
-     console.log(results);
-     console.log("nose x="+ results[0].pose.nose.x);
-     console.log("nose y="+ results[0].pose.nose.y);
- }   
+    console.log(results);
+    noseX= results[0].pose.nose.x;
+    noseY= results[0].pose.nose.y;
+    console.log("nose x="+ noseX);
+    console.log("nose y="+ noseY);
+}   
 }
-
 function draw(){
     image(video,0,0,500,400);
+    image(mustache,noseX-15,noseY-15,30,30);
 }
 function take_snapshot(){
     save('myFilterImage.png');
